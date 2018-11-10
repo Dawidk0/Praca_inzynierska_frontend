@@ -1,22 +1,58 @@
 <template>
   <v-container fluid>
-    <v-slide-y-transition mode="out-in">
-      <v-layout column align-center>
-        <img src="@/assets/logo.png" alt="Vuetify.js" class="mb-5">
-        <blockquote>
-          &#8220;First, solve the problem. Then, write the code.&#8221;
-          <footer>
-            <small>
-              <em>&mdash;John Johnson</em>
-            </small>
-          </footer>
-        </blockquote>
-      </v-layout>
-    </v-slide-y-transition>
+    <GenericTable
+      :tableName="tableName"
+      :tableHeaders="tableHeaders"
+      :tableItems="tableItems"
+      :dataModel="dataModel"
+    ></GenericTable>
   </v-container>
 </template>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<script>
+  import { mapGetters, mapMutations, mapActions } from 'vuex'
+  import GenericTable from './generic/GenericTable'
+
+  export default {
+    data () {
+      return {
+        test: this.$store.getters.sampelGetter,
+        tableName: 'Crudy jakies',
+        tableHeaders: [
+            {text: 'Nazwa', value: 'nazwa'},
+            {text: 'Opis', value: 'opis'},
+            {text: 'Akcje', value: 'akcje'}
+        ],
+        tableItems: [
+          {nazwa: '123', opis: '222'},
+          {nazwa: 'abc', opis: 'bbb'}
+        ],
+        dataModel:
+        {
+          nazwa: '',
+          opis: ''
+        }
+      }
+    },
+    computed: {
+      ...mapGetters([
+        'sampelGetter'
+      ])
+    },
+    methods: {
+      ...mapMutations([
+        'doSmth'
+      ]),
+      ...mapActions([
+        'waitAndDo'
+      ])
+    },
+    components: {
+      GenericTable
+    }
+  }
+</script>
+
 <style scoped>
 h1, h2 {
   font-weight: normal;
