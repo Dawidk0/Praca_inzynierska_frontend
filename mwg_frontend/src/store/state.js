@@ -1,3 +1,6 @@
 export default{
-  counter: 'COUNTER'
+  detailsItemId: -1,
+  detailsItemCategory: '',
+  detailsItem: {},
+  tables: {menus: {}, suppliers: {}, ingredients: {}, ingredientTypes: {}, meals: {}, mealTypes: {}}
 }

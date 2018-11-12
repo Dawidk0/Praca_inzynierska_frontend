@@ -1,37 +1,21 @@
 <template>
   <v-container fluid>
-    <GenericTable
-      :tableName="tableName"
-      :tableHeaders="tableHeaders"
-      :tableItems="tableItems"
-      :dataModel="dataModel"
-    ></GenericTable>
+  <!--  <generic-table
+      :tableModel="tableModel"
+    ></generic-table> -->
   </v-container>
 </template>
 
 <script>
   import { mapGetters, mapMutations, mapActions } from 'vuex'
   import GenericTable from './generic/GenericTable'
+  import tableModel from '../models/menuTableModel'
 
   export default {
     data () {
       return {
         test: this.$store.getters.sampelGetter,
-        tableName: 'Crudy jakies',
-        tableHeaders: [
-            {text: 'Nazwa', value: 'nazwa'},
-            {text: 'Opis', value: 'opis'},
-            {text: 'Akcje', value: 'akcje'}
-        ],
-        tableItems: [
-          {nazwa: '123', opis: '222'},
-          {nazwa: 'abc', opis: 'bbb'}
-        ],
-        dataModel:
-        {
-          nazwa: '',
-          opis: ''
-        }
+        tableModel
       }
     },
     computed: {
