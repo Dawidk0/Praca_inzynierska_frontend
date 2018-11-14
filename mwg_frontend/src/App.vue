@@ -85,7 +85,7 @@
           {icon: 'content_copy', title: 'Dostawcy', tos: '/suppliers'},
           {icon: 'content_copy', title: 'Dodatki', tos: '/additions'},
           {icon: 'content_copy', title: 'Klienci', tos: '/clients'},
-          {icon: 'content_copy', title: 'Zamówienia', tos: '/table2'}
+          {icon: 'content_copy', title: 'Zamówienia', tos: '/orders'}
         ],
         menus
       }

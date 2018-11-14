@@ -8,7 +8,7 @@
 
 <script>
   import GenericTable from '../generic/GenericTable'
-  import tableModel from '../../models/supplierTableModel'
+  import tableModel from '../../models/bookingsTableModel'
 
   export default {
     name: 'Bookings',

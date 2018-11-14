@@ -8,7 +8,7 @@
 
 <script>
   import GenericTable from '../generic/GenericTable'
-  import tableModel from '../../models/menuTableModel'
+  import tableModel from '../../models/menusTableModel'
 
   export default {
     name: 'Menus',

@@ -13,8 +13,8 @@
 <script>
   import GenericTable from '../generic/GenericTable'
   import GenericDetails from '../generic/GenericDetails'
-  import tableModel from '../../models/menuTableModel'
-  import detailsModel from '../../models/menuDetailsModel'
+  import tableModel from '../../models/menusTableModel'
+  import detailsModel from '../../models/menusDetailsModel'
 
   export default {
     name: 'MenuDetails',

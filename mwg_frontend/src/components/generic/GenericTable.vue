@@ -30,19 +30,39 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex v-for="(value,key,index) in defaultItem" :key="key" >
-                  <v-text-field
-                    v-if="!tableHeaders[index].selectField"
-                    v-model="editedItem[key]"
-                    :label="polishLabels[index]"
-                  ></v-text-field>
+                  <v-menu
+                    v-if="tableHeaders[index].dateField"
+                    :close-on-content-click="false"
+                    v-model="tableHeaders[index].input"
+                    :nudge-right="40"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+                    >
+                    <v-text-field
+                      slot="activator"
+                      v-model="editedItem[key]"
+                      :label="polishLabels[index]"
+                      prepend-icon="event"
+                      readonly
+                    ></v-text-field>
+                    <v-date-picker v-model="editedItem[key]" @input="tableHeaders[index].input = false"></v-date-picker>
+                  </v-menu>
                   <v-select
-                    v-else
+                    v-if="tableHeaders[index].selectField"
                     :items="getTableItems(tableHeaders[index].fromTable)"
                     item-text="name"
                     :item-value="key"
                     :label="polishLabels[index]"
                     v-model="editedItem[key]"
                   ></v-select>
+                  <v-text-field
+                    v-if="!tableHeaders[index].selectField && !tableHeaders[index].dateField"
+                    v-model="editedItem[key]"
+                    :label="polishLabels[index]"
+                  ></v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -119,6 +139,7 @@
     props: ['tableModel'],
 
     data: () => ({
+      dateField: '',
       path: '',
       tableName: '',
       newItemTitle: '',
