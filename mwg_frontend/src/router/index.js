@@ -7,6 +7,9 @@ import Meals from '@/components/meals/Meals'
 import Suppliers from '@/components/suppliers/Suppliers'
 import Ingredients from '@/components/ingredients/Ingredients'
 import Clients from '@/components/clients/Clients'
+import Additions from '@/components/additions/Additions'
+import Bookings from '@/components/bookings/Bookings'
+import WeddingReceptions from '@/components/weddingReceptions/WeddingReceptions'
 
 Vue.use(Router)
 
@@ -51,6 +54,21 @@ export default new Router({
       path: '/clients',
       name: 'Clients',
       component: Clients
+    },
+    {
+      path: '/additions',
+      name: 'Additions',
+      component: Additions
+    },
+    {
+      path: '/bookings',
+      name: 'Bookings',
+      component: Bookings
+    },
+    {
+      path: '/wedding-receptions',
+      name: 'WeddingReceptions',
+      component: WeddingReceptions
     }
   ],
   mode: 'history'

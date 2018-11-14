@@ -77,13 +77,13 @@
         showDrawer: true,
         logoutButton: {icon: 'insert_emoticon', title: 'Wyloguj'},
         categories: [
-          {icon: 'contacts', title: 'Menu', tos: '/'},
+          {icon: 'contacts', title: 'Menu', tos: '/menus'},
           {icon: 'history', title: 'Dania', tos: '/meals'},
-          {icon: 'content_copy', title: 'Wesela', tos: '/'},
-          {icon: 'content_copy', title: 'Noclegi', tos: '/table2'},
+          {icon: 'content_copy', title: 'Wesela', tos: '/wedding-receptions'},
+          {icon: 'content_copy', title: 'Noclegi', tos: '/bookings'},
           {icon: 'content_copy', title: 'Składniki', tos: '/ingredients'},
           {icon: 'content_copy', title: 'Dostawcy', tos: '/suppliers'},
-          {icon: 'content_copy', title: 'Dodatki', tos: '/table2'},
+          {icon: 'content_copy', title: 'Dodatki', tos: '/additions'},
           {icon: 'content_copy', title: 'Klienci', tos: '/clients'},
           {icon: 'content_copy', title: 'Zamówienia', tos: '/table2'}
         ],
