@@ -1,5 +1,5 @@
 export default{
-  detailsButton: false,
+  detailsButton: true,
   path: 'meals',
   tableName: 'Dania',
   newItemTitle: 'Nowe danie',

@@ -67,7 +67,9 @@
     methods: {
       ...mapMutations([
         'setDetailsItem',
-        'saveItem'
+        'saveItem',
+        'setDetailsComponentFlag',
+        'disableDetailsComponentFlag'
       ]),
       setEditedItem () {
         this.editedItem = Object.assign({}, this.getDetailItem)
@@ -76,8 +78,14 @@
     },
 
     created () {
+      this.setDetailsComponentFlag()
       this.setEditedItem()
+    },
+
+    beforeRouteLeave () {
+      this.disableDetailsComponentFlag()
     }
+
   }
 </script>
 

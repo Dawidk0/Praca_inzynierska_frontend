@@ -29,7 +29,7 @@
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
-                <v-flex v-for="(value,key,index) in defaultItem" :key="key" >
+                <v-flex  v-for="(value,key,index) in defaultItem" v-if="tableModel.parentId !== key" :key="key" >
                   <v-menu
                     v-if="tableHeaders[index].dateField"
                     :close-on-content-click="false"
@@ -53,7 +53,7 @@
                   <v-select
                     v-if="tableHeaders[index].selectField"
                     :items="getTableItems(tableHeaders[index].fromTable)"
-                    item-text="name"
+                    :item-text=tableHeaders[index].toShow
                     :item-value="key"
                     :label="polishLabels[index]"
                     v-model="editedItem[key]"
@@ -83,10 +83,10 @@
       hide-actions
       class="elevation-1"
     >
-      <template slot="items" slot-scope="props">
+      <template slot="items" slot-scope="props" >
         <td
           class="text-xs-right"
-          v-for="(value,key,index) in defaultItem">
+          v-for="(value,key,index) in defaultItem" v-if="tableModel.parentId !== key">
           {{
             tableHeaders[index].relation ?
             getRelationName(
@@ -219,7 +219,6 @@
           Object.assign(this.getTableItems(this.path)[this.editedIndex], this.editedItem)
         } else {
           this.getTableItems(this.path).push(this.editedItem)
-          // this.$store.commit('addItem', {tableName: this.path, item: this.editedItem})
         }
         this.close()
       },
@@ -227,7 +226,7 @@
       goToDetails (item) {
         let tempId = Object.values(item)[0]
         this.$store.commit('setDetailsItem', { id: tempId, path: this.path, item: item })
-        this.$router.push(this.path + '/' + tempId)
+        this.$router.push(this.path + '/' + tempId + '/details')
       }
     }
   }

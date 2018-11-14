@@ -1,25 +1,27 @@
 export default{
   detailsButton: false,
-  path: 'ingredients',
-  tableName: 'Składniki',
-  newItemTitle: 'Nowy składnik',
-  editItemTitle: 'Edytuj składnik',
+  path: 'weddingReceptions',
+  tableName: 'Przyjęcia weselne',
+  newItemTitle: 'Nowe przyjęcie weselne',
+  editItemTitle: 'Edytuj przyjęcie weselne',
   headers: [
-    {text: 'Nazwa', value: 'name'},
-    {text: 'Ilość', value: 'amount'},
-    {text: 'Jednostka', value: 'shoppingUnit'},
-    {text: 'Dostawca', value: 'supplierId', relation: true, fromTable: 'suppliers', toShow: 'name', selectField: true},
-    {text: 'Typ', value: 'ingredientTypeId', relation: true, fromTable: 'ingredientTypes', toShow: 'name', selectField: true},
+    {text: 'Data podpisania umowy', value: 'signingDate', dateField: true},
+    {text: 'Data przyjęcia', value: 'weddingDate', dateField: true},
+    {text: 'Liczba osób dorosłych', value: 'numberOfAdults'},
+    {text: 'Liczba dzieci', value: 'numberOfChildren'},
+    {text: 'Klient', value: 'clientId', relation: true, fromTable: 'clients', toShow: 'name', selectField: true},
+    {text: 'Poprawiny', value: 'afterParty'},
     {text: 'Akcje', value: 'actions'}
   ],
   polishLabels: [
-    'Nazwa', 'Jednostka', 'Ilość', 'Dostawca', 'Typ', 'Akcje'
+    'Data podpisania umowy', 'Data przyjęcia', 'Liczba osób dorosłych', 'Liczba dzieci', 'Klient', 'Poprawiny'
   ],
   model: {
-    name: '',
-    amount: '',
-    shoppingUnit: '',
-    supplierId: -1,
-    ingredientTypeId: -1
+    signingDate: '',
+    weddingDate: '',
+    numberOfAdults: '',
+    numberOfChildren: '',
+    clientId: -1,
+    afterParty: 'tak'
   }
 }

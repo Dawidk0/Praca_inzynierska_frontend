@@ -1,6 +1,11 @@
 export default {
   getTableItems: state => tableName => {
-    return state.tables[tableName]
+    if (state.detailsComponent === true) {
+      console.log(state.detailsItemField)
+      return state.tables[tableName].find(x => x[state.detailsItemField] === state.detailsItemId)
+    } else {
+      return state.tables[tableName]
+    }
   },
   getDetailItem: (state) => {
     return state.detailsItem

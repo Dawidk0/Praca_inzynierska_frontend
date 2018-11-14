@@ -3,7 +3,6 @@
     <generic-details
       :detailsModel="detailsModel"
     ></generic-details>
-    MENUS DETAILS ?!?!??!
     <generic-table
     :tableModel="tableModel"
     ></generic-table>
@@ -11,22 +10,37 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex'
   import GenericTable from '../generic/GenericTable'
   import GenericDetails from '../generic/GenericDetails'
-  import tableModel from '../../models/menusTableModel'
+  import tableModel from '../../models/mealInMenusTableModel'
   import detailsModel from '../../models/menusDetailsModel'
 
   export default {
     name: 'MenuDetails',
+    props: ['id'],
+
     data () {
       return {
         tableModel,
         detailsModel
       }
     },
+
     components: {
       GenericTable,
       GenericDetails
+    },
+
+    methods: {
+      ...mapMutations([
+        'setDetailsItemField'
+      ])
+    },
+
+    created () {
+      this.setDetailsItemField('mealId')
+      this.tableModel.parentIdValue = this.id
     }
   }
 </script>

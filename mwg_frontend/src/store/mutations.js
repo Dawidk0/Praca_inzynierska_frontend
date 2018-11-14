@@ -15,5 +15,14 @@ export default{
   },
   addItem: (state, {tableName, item}) => {
     state.tables[tableName].push(item)
+  },
+  setDetailsComponentFlag: state => {
+    state.detailsComponent = true
+  },
+  disableDetailsComponentFlag: state => {
+    state.detailsComponent = false
+  },
+  setDetailsItemField: state => field => {
+    state.detailsItemField = field
   }
 }

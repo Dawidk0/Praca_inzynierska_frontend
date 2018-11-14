@@ -36,9 +36,10 @@ export default new Router({
       component: GenericTable
     },
     {
-      path: '/menus/:id',
+      path: '/menus/:id/details',
       name: 'MenuDetails',
-      component: MenuDetails
+      component: MenuDetails,
+      props: true
     },
     {
       path: '/suppliers',
