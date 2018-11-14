@@ -59,6 +59,7 @@
   import { ingredientTypes } from './mocks/ingredientTypes'
   import { meals } from './mocks/meals'
   import { mealTypes } from './mocks/mealTypes'
+  import { clients } from './mocks/clients'
 
   export default {
     data () {
@@ -93,6 +94,7 @@
       this.$store.commit('saveTable', {table: ingredientTypes, name: 'ingredientTypes'})
       this.$store.commit('saveTable', {table: meals, name: 'meals'})
       this.$store.commit('saveTable', {table: mealTypes, name: 'mealTypes'})
+      this.$store.commit('saveTable', {table: clients, name: 'clients'})
       // WAZNE DODAC DO store.state
     }
   }

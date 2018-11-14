@@ -6,7 +6,7 @@ export default{
   editItemTitle: 'Edytuj menu',
   headers: [
     {text: 'Nazwa', value: 'name'},
-    {text: 'Opis', value: 'desc'},
+    {text: 'Opis', value: 'description'},
     {text: 'Akcje', value: 'actions'}
   ],
   polishLabels: [
@@ -14,6 +14,6 @@ export default{
   ],
   model: {
     name: '',
-    desc: ''
+    description: ''
   }
 }

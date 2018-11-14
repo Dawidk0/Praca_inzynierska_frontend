@@ -13,6 +13,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'Main',
+      component: Menus
+    },
+    {
+      path: '/menus',
       name: 'Menus',
       component: Menus
     },
