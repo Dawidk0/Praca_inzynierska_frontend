@@ -60,6 +60,16 @@
   import { meals } from './mocks/meals'
   import { mealTypes } from './mocks/mealTypes'
   import { clients } from './mocks/clients'
+  import { accounts } from './mocks/accounts'
+  import { additionTypes } from './mocks/additionTypes'
+  import { mealIngredients } from './mocks/mealIngredients'
+  import { beds } from './mocks/beds'
+  import { additions } from './mocks/additions'
+  import { weddingReceptions } from './mocks/weddingReceptions'
+  import { bookings } from './mocks/bookings'
+  import { weddingReceptionMeals } from './mocks/weddingReceptionMeals'
+  import { weddingAdditions } from './mocks/weddingAdditions'
+  import { mealInMenus } from './mocks/mealInMenus'
 
   export default {
     data () {
@@ -74,7 +84,7 @@
           {icon: 'content_copy', title: 'Składniki', tos: '/ingredients'},
           {icon: 'content_copy', title: 'Dostawcy', tos: '/suppliers'},
           {icon: 'content_copy', title: 'Dodatki', tos: '/table2'},
-          {icon: 'content_copy', title: 'Klienci', tos: '/table2'},
+          {icon: 'content_copy', title: 'Klienci', tos: '/clients'},
           {icon: 'content_copy', title: 'Zamówienia', tos: '/table2'}
         ],
         menus
@@ -95,6 +105,16 @@
       this.$store.commit('saveTable', {table: meals, name: 'meals'})
       this.$store.commit('saveTable', {table: mealTypes, name: 'mealTypes'})
       this.$store.commit('saveTable', {table: clients, name: 'clients'})
+      this.$store.commit('saveTable', {table: accounts, name: 'accounts'})
+      this.$store.commit('saveTable', {table: additionTypes, name: 'additionTypes'})
+      this.$store.commit('saveTable', {table: mealIngredients, name: 'mealIngredients'})
+      this.$store.commit('saveTable', {table: beds, name: 'beds'})
+      this.$store.commit('saveTable', {table: additions, name: 'additions'})
+      this.$store.commit('saveTable', {table: weddingReceptions, name: 'weddingReceptions'})
+      this.$store.commit('saveTable', {table: bookings, name: 'bookings'})
+      this.$store.commit('saveTable', {table: weddingReceptionMeals, name: 'weddingReceptionMeals'})
+      this.$store.commit('saveTable', {table: weddingAdditions, name: 'weddingAdditions'})
+      this.$store.commit('saveTable', {table: mealInMenus, name: 'mealInMenus'})
       // WAZNE DODAC DO store.state
     }
   }

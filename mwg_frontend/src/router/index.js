@@ -6,6 +6,7 @@ import Menus from '@/components/menus/Menus'
 import Meals from '@/components/meals/Meals'
 import Suppliers from '@/components/suppliers/Suppliers'
 import Ingredients from '@/components/ingredients/Ingredients'
+import Clients from '@/components/clients/Clients'
 
 Vue.use(Router)
 
@@ -45,6 +46,11 @@ export default new Router({
       path: '/ingredients',
       name: 'Ingredients',
       component: Ingredients
+    },
+    {
+      path: '/clients',
+      name: 'Clients',
+      component: Clients
     }
   ],
   mode: 'history'
