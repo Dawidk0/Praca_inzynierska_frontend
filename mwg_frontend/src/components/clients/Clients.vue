@@ -1,6 +1,5 @@
 <template>
   <v-container fluid>
-    asdas
     <generic-table
       :tableModel="tableModel"
     ></generic-table>
