@@ -79,12 +79,14 @@
         categories: [
           {icon: 'contacts', title: 'Menu', tos: '/menus'},
           {icon: 'history', title: 'Dania', tos: '/meals'},
-          {icon: 'content_copy', title: 'Wesela', tos: '/wedding-receptions'},
+          {icon: 'content_copy', title: 'Wesela', tos: '/weddingReceptions'},
           {icon: 'content_copy', title: 'Noclegi', tos: '/bookings'},
           {icon: 'content_copy', title: 'Składniki', tos: '/ingredients'},
+          {icon: 'content_copy', title: 'Dodatki na weselu', tos: '/weddingAdditions'},
           {icon: 'content_copy', title: 'Dostawcy', tos: '/suppliers'},
           {icon: 'content_copy', title: 'Dodatki', tos: '/additions'},
           {icon: 'content_copy', title: 'Klienci', tos: '/clients'},
+          {icon: 'content_copy', title: 'Podsumowanie', tos: '/summary'},
           {icon: 'content_copy', title: 'Zamówienia', tos: '/orders'}
         ],
         menus

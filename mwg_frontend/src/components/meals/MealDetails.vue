@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <generic-table
-    :tableModel="tableModel"
+      :tableModel="tableModel"
     ></generic-table>
   </v-container>
 </template>
@@ -10,10 +10,10 @@
   import { mapMutations } from 'vuex'
   import GenericTable from '../generic/GenericTable'
   import GenericDetails from '../generic/GenericDetails'
-  import tableModel from '../../models/mealInMenusTableModel'
+  import tableModel from '../../models/mealIngredientsTableModel'
 
   export default {
-    name: 'MenuDetails',
+    name: 'MealDetails',
     props: ['id'],
 
     data () {
@@ -34,7 +34,7 @@
     },
 
     created () {
-      this.setDetailsItemField('mealId')
+      this.setDetailsItemField('ingredientId')
       this.tableModel.parentIdValue = this.id
     }
   }

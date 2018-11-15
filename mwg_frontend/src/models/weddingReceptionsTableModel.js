@@ -1,5 +1,5 @@
 export default{
-  detailsButton: false,
+  detailsButton: true,
   path: 'weddingReceptions',
   tableName: 'Przyjęcia weselne',
   newItemTitle: 'Nowe przyjęcie weselne',
