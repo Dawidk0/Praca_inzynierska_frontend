@@ -1,8 +1,5 @@
 <template>
   <v-container>
-    <generic-details
-      :detailsModel="detailsModel"
-    ></generic-details>
     <generic-table
     :tableModel="tableModel"
     ></generic-table>

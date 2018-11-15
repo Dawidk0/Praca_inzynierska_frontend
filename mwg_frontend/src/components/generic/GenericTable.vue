@@ -52,14 +52,16 @@
                   </v-menu>
                   <v-select
                     v-if="tableHeaders[index].selectField"
-                    :items="getTableItems(tableHeaders[index].fromTable)"
+                    :items="getTableItems({
+                      tableName: tableHeaders[index].fromTable
+                      })"
                     :item-text=tableHeaders[index].toShow
                     :item-value="key"
                     :label="polishLabels[index]"
                     v-model="editedItem[key]"
                   ></v-select>
                   <v-text-field
-                    v-if="!tableHeaders[index].selectField && !tableHeaders[index].dateField"
+                    v-if="!tableHeaders[index].selectField && !tableHeaders[index].dateField && key != tableModel.parentIdField"
                     v-model="editedItem[key]"
                     :label="polishLabels[index]"
                   ></v-text-field>
@@ -78,7 +80,11 @@
     </v-card>
     <v-data-table
       :headers="tableHeaders"
-      :items="getTableItems(this.path)"
+      :items="getTableItems({
+      tableName: this.path,
+      parentId: tableModel.parentIdValue,
+      parentIdField: tableModel.parentIdField
+      })"
       :search="search"
       hide-actions
       class="elevation-1"
@@ -196,14 +202,19 @@
       ]),
 
       editItem (item) {
-        this.editedIndex = this.getTableItems(this.path).indexOf(item)
+        this.editedIndex = this.getTableItems({
+          tableName: this.path}).indexOf(item)
         this.editedItem = Object.assign({}, item)
+        if (this.tableModel.parentIdField) { this.editedItem[this.tableModel.parentIdField] = this.tableModel.parentIdValue }
         this.dialog = true
       },
 
       deleteItem (item) {
-        const index = this.getTableItems(this.path).indexOf(item)
-        confirm('Na pewno chcesz usunąć tę pozycje?') && this.getTableItems(this.path).splice(index, 1)
+        const index = this.getTableItems({
+          tableName: this.path}).indexOf(item)
+        console.log(index)
+        confirm('Na pewno chcesz usunąć tę pozycje?') && this.getTableItems({
+          tableName: this.path}).splice(index, 1)
       },
 
       close () {
@@ -215,10 +226,13 @@
       },
 
       save () {
+        if (this.tableModel.parentIdField) { this.editedItem[this.tableModel.parentIdField] = this.tableModel.parentIdValue }
         if (this.editedIndex > -1) {
-          Object.assign(this.getTableItems(this.path)[this.editedIndex], this.editedItem)
+          Object.assign(this.getTableItems({
+            tableName: this.path})[this.editedIndex], this.editedItem)
         } else {
-          this.getTableItems(this.path).push(this.editedItem)
+          this.getTableItems({
+            tableName: this.path}).push(this.editedItem)
         }
         this.close()
       },

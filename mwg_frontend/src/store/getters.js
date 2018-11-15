@@ -1,8 +1,8 @@
 export default {
-  getTableItems: state => tableName => {
-    if (state.detailsComponent === true) {
-      console.log(state.detailsItemField)
-      return state.tables[tableName].find(x => x[state.detailsItemField] === state.detailsItemId)
+  getTableItems: state => ({tableName, parentId, parentIdField}) => {
+    if (parentId) {
+      // eslint-disable-next-line
+      return state.tables[tableName].filter(x => x[parentIdField] == parentId)
     } else {
       return state.tables[tableName]
     }

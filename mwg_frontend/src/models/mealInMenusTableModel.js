@@ -1,6 +1,6 @@
 export default{
   detailsButton: false,
-  parentId: 'menuId',
+  parentIdField: 'menuId',
   parentIdValue: -1,
   path: 'mealInMenus',
   tableName: 'Dania w menu',
