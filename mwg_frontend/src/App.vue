@@ -7,13 +7,14 @@
       v-model="showDrawer"
       fixed
       app
+      v-if="isAuthenticated"
     >
       <v-list>
         <v-list-tile
           v-for="item in categories"
           :key="item.title"
           router
-          :to="item.tos">
+          :to="item.to">
           <v-list-tile-action>
             <v-icon>{{item.icon}}</v-icon>
           </v-list-tile-action>
@@ -31,12 +32,15 @@
       fixed
     >
       <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
-        <v-toolbar-side-icon @click.stop="showDrawer = !showDrawer"></v-toolbar-side-icon>
+        <v-toolbar-side-icon
+          @click.stop="showDrawer = !showDrawer"
+          v-if="isAuthenticated"
+        ></v-toolbar-side-icon>
         <span class="hidden-sm-and-down">Weselichooo</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn flat>
-        <v-icon left>{{ logoutButton.icon }}</v-icon>
+      <v-btn flat v-if="isAuthenticated" @click="logoutMethod()">
+        <v-icon left >{{ logoutButton.icon }}</v-icon>
         {{logoutButton.title}}
       </v-btn>
     </v-toolbar>
@@ -52,7 +56,7 @@
 </template>
 
 <script>
-  import { mapMutations } from 'vuex'
+  import { mapMutations, mapGetters } from 'vuex'
   import { menus } from './mocks/menus'
   import { suppliers } from './mocks/suppliers'
   import { ingredients } from './mocks/ingredients'
@@ -70,6 +74,20 @@
   import { weddingReceptionMeals } from './mocks/weddingReceptionMeals'
   import { weddingAdditions } from './mocks/weddingAdditions'
   import { mealInMenus } from './mocks/mealInMenus'
+  import Router from './router/index'
+  import {store} from './store/index'
+
+Router.beforeEach(
+  (to, form, next) => {
+    if (to.matched.some(record => record.meta.forAll)) {
+      next()
+    } else {
+      // eslint-disable-next-line
+      if (store.state.isAuthenticated == true) { next() } else next({path: '/login'})
+    }
+    next()
+  }
+)
 
   export default {
     data () {
@@ -77,26 +95,37 @@
         showDrawer: true,
         logoutButton: {icon: 'insert_emoticon', title: 'Wyloguj'},
         categories: [
-          {icon: 'contacts', title: 'Menu', tos: '/menus'},
-          {icon: 'history', title: 'Dania', tos: '/meals'},
-          {icon: 'content_copy', title: 'Wesela', tos: '/weddingReceptions'},
-          {icon: 'content_copy', title: 'Noclegi', tos: '/bookings'},
-          {icon: 'content_copy', title: 'Składniki', tos: '/ingredients'},
-          {icon: 'content_copy', title: 'Dodatki na weselu', tos: '/weddingAdditions'},
-          {icon: 'content_copy', title: 'Dostawcy', tos: '/suppliers'},
-          {icon: 'content_copy', title: 'Dodatki', tos: '/additions'},
-          {icon: 'content_copy', title: 'Klienci', tos: '/clients'},
-          {icon: 'content_copy', title: 'Podsumowanie', tos: '/summary'},
-          {icon: 'content_copy', title: 'Zamówienia', tos: '/orders'}
+          {icon: 'contacts', title: 'Menu', to: '/menus'},
+          {icon: 'history', title: 'Dania', to: '/meals'},
+          {icon: 'content_copy', title: 'Wesela', to: '/weddingReceptions'},
+          {icon: 'content_copy', title: 'Noclegi', to: '/bookings'},
+          {icon: 'content_copy', title: 'Składniki', to: '/ingredients'},
+          {icon: 'content_copy', title: 'Dodatki na weselu', to: '/weddingAdditions'},
+          {icon: 'content_copy', title: 'Dostawcy', to: '/suppliers'},
+          {icon: 'content_copy', title: 'Dodatki', to: '/additions'},
+          {icon: 'content_copy', title: 'Klienci', to: '/clients'},
+          {icon: 'content_copy', title: 'Podsumowanie', to: '/summary'},
+          {icon: 'content_copy', title: 'Zamówienia', to: '/orders'},
+          {icon: 'content_copy', title: 'Panel klienta', to: '/client-panel/1'}
         ],
         menus
       }
     },
+    computed: {
+      ...mapGetters([
+        'isAuthenticated'
+      ])
+    },
 
     methods: {
       ...mapMutations([
-        'saveMenus'
-      ])
+        'saveMenus',
+        'logout'
+      ]),
+      logoutMethod () {
+        this.logout()
+        Router.push('/login')
+      }
     },
 
     created () {

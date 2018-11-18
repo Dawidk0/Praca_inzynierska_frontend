@@ -1,5 +1,6 @@
 export default{
-  detailsButton: false,
+  detailsButton: true,
+  buttonName: 'Konto',
   path: 'clients',
   tableName: 'Klienci',
   newItemTitle: 'Nowy klient',

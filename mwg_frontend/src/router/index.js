@@ -8,13 +8,18 @@ import MealDetails from '@/components/meals/MealDetails'
 import Suppliers from '@/components/suppliers/Suppliers'
 import Ingredients from '@/components/ingredients/Ingredients'
 import Clients from '@/components/clients/Clients'
+import Account from '@/components/clients/Account'
 import Additions from '@/components/additions/Additions'
 import WeddingAdditions from '@/components/additions/WeddingAdditions'
 import Bookings from '@/components/bookings/Bookings'
 import WeddingReceptions from '@/components/weddingReceptions/WeddingReceptions'
 import WeddingReceptionDetails from '@/components/weddingReceptions/WeddingReceptionDetails'
-import ChoiceToSummary from '@/components/summary/ChoiceToSummary'
-import SummaryWeddingReception from '@/components/summary/SummaryWeddingReception'
+import Summary from '@/components/summary/Summary'
+import SummaryDetails from '@/components/summary/SummaryDetails'
+import ClientPanel from '@/components/clientPanel/ClientPanel'
+import Orders from '@/components/orders/Orders'
+import OrderDetails from '@/components/orders/OrderDetails'
+import Login from '@/components/login/LoginPanel'
 
 Vue.use(Router)
 
@@ -68,6 +73,12 @@ export default new Router({
       component: Clients
     },
     {
+      path: '/clients/:id/details',
+      name: 'Account',
+      component: Account,
+      props: true
+    },
+    {
       path: '/additions',
       name: 'Additions',
       component: Additions
@@ -95,14 +106,38 @@ export default new Router({
     },
     {
       path: '/summary',
-      name: 'ChoiceToSummary',
-      component: ChoiceToSummary
+      name: 'Summary',
+      component: Summary
     },
     {
       path: '/summary/:id',
-      name: 'SummaryWeddingReception',
-      component: SummaryWeddingReception,
+      name: 'SummaryDetails',
+      component: SummaryDetails,
       props: true
+    },
+    {
+      path: '/client-panel/:id',
+      name: 'ClientPanel',
+      component: ClientPanel,
+      props: true
+    },
+    {
+      path: '/orders',
+      name: 'Orders',
+      component: Orders,
+      props: true
+    },
+    {
+      path: '/orders/:id',
+      name: 'OrderDetails',
+      component: OrderDetails,
+      props: true
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login,
+      meta: {forAll: true}
     }
   ],
   mode: 'history'

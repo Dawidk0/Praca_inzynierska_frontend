@@ -2,22 +2,25 @@
     <v-container>
       <v-card>
         <v-card-title>
-          <span class="headline" > {{editedItem[detailsModel.fields.header]}}</span>
+          <span class="headline" > {{editedItem[detailsModel.fields.header]}}</span> {{editedItem}}
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
-              <v-flex xs12 sm6 md4
+              <v-flex xs12 sm6
                       v-for="textField in detailsModel.fields.textFields"
-                      :key="textField">
+                      :key="textField.value">
                 <v-text-field
-                  :label="textField"
-                  v-model="editedItem[textField]"
+                  :label="textField.text"
+                  v-model="editedItem[textField.value]"
                 ></v-text-field>
               </v-flex>
-              <v-flex xs12 v-if="detailsModel.fields.password">
+              <v-flex xs12 sm6
+                      v-for="passwordField in detailsModel.fields.password"
+                      :key="passwordField.value">
                 <v-text-field
-                  :label="detailsModel.fields.password"
+                  :label="passwordField.text"
+                  v-model="editedItem[passwordField.value]"
                   type="password"
                   required
                 ></v-text-field>
@@ -29,8 +32,29 @@
                 <v-select
                   :items="selectField.items"
                   :label="selectField.label"
-                  v-model="editedItem[selectField.label]"
+                  v-model="editedItem[selectField.value]"
                 ></v-select>
+              </v-flex>
+              <v-flex v-for="dateField in detailsModel.fields.dateFields" :key="dateField.text">
+                <v-menu
+                  :close-on-content-click="false"
+                  v-model="input[dateField.value]"
+                  :nudge-right="40"
+                  lazy
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  min-width="290px"
+                >
+                  <v-text-field
+                    slot="activator"
+                    v-model="editedItem[dateField.value]"
+                    :label="dateField.text"
+                    prepend-icon="event"
+                    readonly
+                  ></v-text-field>
+                  <v-date-picker v-model="editedItem[dateField.value]" @input="input[dateField.value]= false"></v-date-picker>
+                </v-menu>
               </v-flex>
             </v-layout>
           </v-container>
@@ -38,7 +62,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click.native="setEditedItem">Restart</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="saveItem(editedItem)">Save</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="save">Zapisz</v-btn>
         </v-card-actions>
       </v-card>
 
@@ -49,18 +73,21 @@
   import { mapGetters, mapMutations } from 'vuex'
 
   export default {
-    props: ['detailsModel'],
+    props: ['detailsModel', 'id'],
     name: 'GenericDetails',
 
     data () {
       return {
-        editedItem: {}
+        editedItem: {},
+        input: {creationDate: '', expireDate: ''}
       }
     },
 
     computed: {
       ...mapGetters([
-        'getDetailItem'
+        'getDetailItem',
+        'getAccountDetail',
+        'getTableItems'
       ])
     },
 
@@ -71,15 +98,18 @@
         'setDetailsComponentFlag',
         'disableDetailsComponentFlag'
       ]),
-      setEditedItem () {
-        this.editedItem = Object.assign({}, this.getDetailItem)
+      createPDF () {
+        this.editedItem = Object.assign({}, this.getAccountDetail({tableName: 'accounts', field: 'clientId', value: this.id}))
+      },
+      save () {
+        Object.assign(this.getTableItems({
+          tableName: 'accounts'})[this.editedItem.accountId - 1], this.editedItem)
       }
-
     },
 
     created () {
       this.setDetailsComponentFlag()
-      this.setEditedItem()
+      this.createPDF()
     },
 
     beforeRouteLeave () {

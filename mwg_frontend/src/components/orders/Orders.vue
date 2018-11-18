@@ -66,7 +66,7 @@
             @click="goToDetails(props.item)"
             v-if="tableModel.detailsButton"
           >
-            Podsumowanie
+            Zamówienie
           </v-btn>
         </td>
       </template>
@@ -81,11 +81,11 @@
 </template>
 
 <script>
-  import tableModel from '../../models/weddingReceptionsTableModel'
+  import tableModel from '../../models/summaryTableModel'
   import { mapGetters, mapMutations } from 'vuex'
 
   export default {
-    name: 'ChoiceToSummary',
+    name: 'Orders',
 
     data: () => ({
       tableModel,
@@ -184,7 +184,7 @@
       goToDetails (item) {
         let tempId = Object.values(item)[0]
         this.$store.commit('setDetailsItem', { id: tempId, path: this.path, item: item })
-        this.$router.push('summary/' + tempId)
+        this.$router.push('orders/' + tempId)
       }
     }
   }

@@ -5,40 +5,39 @@
         <span class="headline" > Przyjęcie weselne nr {{id}}</span>
       </v-card-title>
       <v-card-text>
-        <v-container grid-list-md>
-          {{clientDetails}}
-        <!--  <v-layout wrap>
-            <v-flex xs12 sm6 md4
-                    v-for="textField in detailsModel.fields.textFields"
-                    :key="textField">
-              <v-text-field
-                :label="textField"
-                v-model="editedItem[textField]"
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs12 v-if="detailsModel.fields.password">
-              <v-text-field
-                :label="detailsModel.fields.password"
-                type="password"
-                required
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs12 sm6
-                    v-for="selectField in detailsModel.fields.selectFields"
-                    :key="selectField.label"
-            >
-              <v-select
-                :items="selectField.items"
-                :label="selectField.label"
-                v-model="editedItem[selectField.label]"
-              ></v-select>
-            </v-flex>
-          </v-layout>-->
+
+        <v-container
+          v-for="(headers,key,index) in model.headers" :key="key">
+          <v-card-title>
+          {{model.tableLabels[index]}}
+          </v-card-title>
+          <v-data-table
+            :headers="headers"
+            :items="index == 0 ?
+            clientDetails
+            :getTableItems({tableName: model.tableName[index], parentId: id, parentIdField: 'weddingReceptionId'})"
+            class="elevation-1"
+            hide-actions
+          >
+            <template slot="items" slot-scope="props">
+              <td class="text-xs-right" v-for="(field, keyy, indexs) in headers">
+                 {{field.relation ?
+                getRelationName(
+                {tableName: field.fromTable,
+                propsToCompare: field.value,
+                props: Number(props.item[field.value]),
+                propsToShow: field.toShow
+                })
+                :props.item[field.value]
+                }}
+              </td>
+            </template>
+          </v-data-table>
         </v-container>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" flat @click.native="setEditedItem">Generuj PDF</v-btn>
+        <v-btn color="blue darken-1" flat @click.native="createPDF">Generuj PDF</v-btn>
       </v-card-actions>
     </v-card>
 
@@ -46,7 +45,7 @@
 </template>
 
 <script>
-  import clientModel from '../../models/clientsTableModel'
+  import model from '../../models/summaryWeddingReceptionModel'
   import { mapGetters, mapMutations } from 'vuex'
 
   export default {
@@ -54,16 +53,17 @@
     props: ['id'],
     data () {
       return {
-        clientModel,
+        model,
         editedItem: {},
-        clientDetails: []
+        clientDetails: [{weddingDate: '12'}]
       }
     },
 
     computed: {
       ...mapGetters([
         'getDetailItem',
-        'getTableItems'
+        'getTableItems',
+        'getRelationName'
       ])
     },
 
@@ -74,16 +74,32 @@
         'setDetailsComponentFlag',
         'disableDetailsComponentFlag'
       ]),
-      setEditedItem () {
-        this.editedItem = Object.assign({}, this.getDetailItem)
+      /* eslint-disable */
+      createPDF () {
+        var jsPDF = require('jspdf')
+        require('jspdf-autotable')
+        var vm = this
+        var columns = vm.model.tableLabels
+        var rows = [
+          [1, 'Shaw', 'Tanzania'],
+          [2, 'Nelson', 'Kazakhstan'],
+          [3, 'Garcia', 'Madagascar']
+        ]
+        var result = Object.keys(obj).map(function(key) {
+          return [Number(key), obj[key]];
+        });
+
+        console.log(result);
+        // var doc = new jsPDF('p', 'pt')
+        // doc.autoTable(vm.model.tableLabels, rows)
+        // doc.save('table.pdf')
       }
 
     },
 
     created () {
       this.setDetailsComponentFlag()
-      this.setEditedItem()
-      this.clientDetails = this.getTableItems({tableName: 'clients', parentId: 1, parentIdField: 'clientId'})
+      this.clientDetails = this.getTableItems({tableName: 'clients', parentId: this.id, parentIdField: 'clientId'})
     },
 
     beforeRouteLeave () {

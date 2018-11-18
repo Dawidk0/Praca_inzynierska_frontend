@@ -24,5 +24,9 @@ export default{
   },
   setDetailsItemField: state => field => {
     state.detailsItemField = field
+  },
+  logout: state => {
+    state.isAuthenticated = false
+    return state.isAuthenticated
   }
 }

@@ -1,4 +1,6 @@
 export default{
+  user: {},
+  isAuthenticated: true,
   detailsItemId: -1,
   detailsItemField: '',
   detailsItemCategory: '',
