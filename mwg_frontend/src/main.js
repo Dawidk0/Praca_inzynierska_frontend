@@ -8,10 +8,11 @@ import colors from 'vuetify/es5/util/colors'
 
 Vue.use(Vuetify, {
   theme: {
-    primary: colors.purple,
-    secondary: colors.grey.darken1,
+    primary: colors.red.darken3,
+    secondary: colors.green.darken1,
     accent: colors.shades.black,
-    error: colors.red.accent3
+    accept: colors.green.darken1,
+    error: colors.red.darken1
   }
 })
 

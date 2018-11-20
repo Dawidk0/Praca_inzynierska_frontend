@@ -67,11 +67,13 @@
       ...mapMutations([
         'setDetailsItem',
         'saveItem',
-        'setDetailsComponentFlag'
+        'setDetailsComponentFlag',
+        'setRole'
       ]),
       loginMethod () {
         var status = this.authentication(this.user)
         if (status) {
+          this.setRole(this.user)
           this.user = {
             login: '',
             password: ''

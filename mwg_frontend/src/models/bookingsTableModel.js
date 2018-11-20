@@ -1,5 +1,6 @@
 export default{
   detailsButton: false,
+  idField: 'bookingId',
   path: 'bookings',
   tableName: 'Noclegi',
   newItemTitle: 'Nowy nocleg',

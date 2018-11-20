@@ -1,5 +1,6 @@
 export default{
   detailsButton: false,
+  idField: 'ingredientId',
   path: 'ingredients',
   tableName: 'Składniki',
   newItemTitle: 'Nowy składnik',
@@ -19,7 +20,7 @@ export default{
     name: '',
     amount: '',
     shoppingUnit: '',
-    supplierId: -1,
-    ingredientTypeId: -1
+    supplierId: 0,
+    ingredientTypeId: 0
   }
 }

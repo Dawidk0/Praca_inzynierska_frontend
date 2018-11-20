@@ -1,5 +1,6 @@
 export default{
   detailsButton: false,
+  idField: 'weddingAdditionId',
   path: 'weddingAdditions',
   tableName: 'Dodatki na weselu',
   newItemTitle: 'Nowy dodatek na weselu',

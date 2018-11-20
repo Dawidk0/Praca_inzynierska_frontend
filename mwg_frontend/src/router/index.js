@@ -20,6 +20,7 @@ import ClientPanel from '@/components/clientPanel/ClientPanel'
 import Orders from '@/components/orders/Orders'
 import OrderDetails from '@/components/orders/OrderDetails'
 import Login from '@/components/login/LoginPanel'
+import Faq from '@/components/faq/Faq'
 
 Vue.use(Router)
 
@@ -116,9 +117,10 @@ export default new Router({
       props: true
     },
     {
-      path: '/client-panel/:id',
+      path: '/client-panel',
       name: 'ClientPanel',
       component: ClientPanel,
+      meta: {forClient: true},
       props: true
     },
     {
@@ -138,6 +140,12 @@ export default new Router({
       name: 'Login',
       component: Login,
       meta: {forAll: true}
+    },
+    {
+      path: '/faq',
+      name: 'Faq',
+      component: Faq,
+      meta: {forClient: true}
     }
   ],
   mode: 'history'

@@ -1,5 +1,6 @@
 export default{
   detailsButton: false,
+  idField: 'additionId',
   path: 'additions',
   tableName: 'Dodatki',
   newItemTitle: 'Nowy dodatek',
@@ -14,6 +15,6 @@ export default{
   ],
   model: {
     name: '',
-    additionTypeId: -1
+    additionTypeId: 0
   }
 }

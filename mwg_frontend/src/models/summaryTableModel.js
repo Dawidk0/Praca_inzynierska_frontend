@@ -1,4 +1,5 @@
 export default{
+  idField: 'weddingReceptionId',
   detailsButton: true,
   path: 'weddingReceptions',
   tableName: 'Przyjęcia weselne',
@@ -8,7 +9,7 @@ export default{
     {text: 'Data przyjęcia', value: 'weddingDate', dateField: true},
     {text: 'Klient', value: 'clientId', relation: true, fromTable: 'clients', toShow: 'name', selectField: true},
     {text: 'Poprawiny', value: 'afterParty'},
-    {text: 'Akcje', value: 'actions'}
+    {text: 'Akcje', value: 'actions', align: 'center'}
   ],
   polishLabels: [
     'Data przyjęcia', 'Klient', 'Poprawiny'

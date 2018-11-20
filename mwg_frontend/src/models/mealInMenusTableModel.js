@@ -1,9 +1,11 @@
 export default{
   detailsButton: false,
+  idField: 'mealInMenuId',
+  fieldToShow: 'name',
+  parentTable: 'menus',
   parentIdField: 'menuId',
   parentIdValue: -1,
   path: 'mealInMenus',
-  tableName: 'Dania w menu',
   newItemTitle: 'Nowe danie w menu',
   editItemTitle: 'Edytuj danie w menu',
   headers: [

@@ -1,6 +1,8 @@
 export var ingredientTypes = [
-  {ingredientTypeId: 1, name: 'przyprawa'},
-  {ingredientTypeId: 2, name: 'warzywo'},
-  {ingredientTypeId: 3, name: 'mięso'},
-  {ingredientTypeId: 4, name: 'inne'}
+  {ingredientTypeId: 0, name: 'Brak'},
+  {ingredientTypeId: 1, name: 'Warzywo'},
+  {ingredientTypeId: 2, name: 'Mięso'},
+  {ingredientTypeId: 3, name: 'Owoc'},
+  {ingredientTypeId: 4, name: 'Nabiał'},
+  {ingredientTypeId: 5, name: 'Napój'}
 ]

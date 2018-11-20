@@ -1,9 +1,11 @@
 export default{
   detailsButton: false,
+  idField: 'mealIngredientId',
+  fieldToShow: 'name',
+  parentTable: 'meals',
   parentIdField: 'mealId',
   parentIdValue: -1,
   path: 'mealIngredients',
-  tableName: 'Składniki w daniu',
   newItemTitle: 'Nowy składnik w daniu',
   editItemTitle: 'Edytuj składnik w daniu',
   headers: [

@@ -1,16 +1,22 @@
 <template>
   <v-container>
-    <checkbox-panel :id="id"></checkbox-panel>
+    <checkbox-panel :id="getClientId"></checkbox-panel>
   </v-container>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import CheckboxPanel from './CheckboxPanel'
+
   export default {
-    props: ['id'],
     name: 'clientPanel',
     components: {
       CheckboxPanel
+    },
+    computed: {
+      ...mapGetters([
+        'getClientId'
+      ])
     }
   }
 </script>

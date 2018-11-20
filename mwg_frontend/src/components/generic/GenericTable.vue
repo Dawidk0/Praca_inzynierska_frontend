@@ -1,26 +1,26 @@
 <template>
-  <v-container>
+  <v-container  grid-list-md text-xs-center>
+    <v-flex>
     <v-card>
-      <v-card-title>
-        {{tableName}}
+      <v-card-title  >
+       <h2>{{tableName}}</h2>
         <v-spacer></v-spacer>
         <v-text-field
-          v-model="search"
-          append-icon="search"
-          label="Wyszukaj"
-          single-line
-          hide-details
+        v-model="search"
+        append-icon="search"
+        label="Wyszukaj"
+        single-line
+        hide-details
         ></v-text-field>
+        <v-spacer></v-spacer>
+        <v-dialog v-model="dialog" max-width="500px">
 
-      <v-divider
-        class="mx-2"
-        inset
-        vertical
-      ></v-divider>
-      </v-card-title>
-      <v-spacer></v-spacer>
-      <v-dialog v-model="dialog" max-width="500px">
-        <v-btn slot="activator" color="primary" dark class="mb-2">Dodaj</v-btn>
+        <v-btn
+          class="green darken-2"
+          dark
+          round
+          slot="activator"
+        >Dodaj</v-btn>
         <v-card>
           <v-card-title>
             <span class="headline">{{ formTitle }}</span>
@@ -61,6 +61,7 @@
                     v-model="editedItem[key]"
                   ></v-select>
                   <v-text-field
+                    required
                     v-if="!tableHeaders[index].selectField && !tableHeaders[index].dateField && key != tableModel.parentIdField"
                     v-model="editedItem[key]"
                     :label="polishLabels[index]"
@@ -77,6 +78,7 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      </v-card-title>
     </v-card>
     <v-data-table
       :headers="tableHeaders"
@@ -86,8 +88,9 @@
       parentIdField: tableModel.parentIdField
       })"
       :search="search"
-      hide-actions
       class="elevation-1"
+      rows-per-page-text="Liczba wierszy"
+      :rows-per-page-items="pages"
     >
       <template slot="items" slot-scope="props" >
         <td
@@ -104,28 +107,43 @@
             :props.item[key]
           }}
         </td>
-        <td class="justify-center layout px-0">
-          <v-icon
+        <td class="text-md-center">
+          <div>
+          <v-btn
+            style="width:30px;height:30px;"
+            class="indigo lighten-1"
+            fab
+            dark
             small
-            class="mr-2"
             @click="editItem(props.item)"
-          >
-            edit
-          </v-icon>
+          ><v-icon>edit</v-icon>
+          </v-btn>
+            <v-btn
+              class="red darken-1"
+              fab
+              dark
+              small
+              style="width:30px;height:30px;"
+              @click="deleteItem(props.item)"
+            >
           <v-icon
-            small
-            @click="deleteItem(props.item)"
+            fab
           >
             delete
           </v-icon>
+          </v-btn>
           <v-btn
-            flat
+            class="deep-orange darken-1"
             small
+            round
+            dark
             @click="goToDetails(props.item)"
+            style="height:30px;"
             v-if="tableModel.detailsButton"
           >
             {{tableModel.buttonName ? tableModel.buttonName : 'Szczegóły'}}
           </v-btn>
+          </div>
         </td>
       </template>
       <template slot="no-data">
@@ -135,6 +153,7 @@
         Brak wyników dla: "{{ search }}"
       </v-alert>
     </v-data-table>
+    </v-flex>
   </v-container>
 </template>
 
@@ -145,6 +164,7 @@
     props: ['tableModel'],
 
     data: () => ({
+      pages: [5, 10, 15, 20],
       dateField: '',
       path: '',
       tableName: '',
@@ -166,7 +186,9 @@
       ...mapGetters([
         'getTableItems',
         'getRelationName',
-        'getMaxValue'
+        'getMaxValue',
+        'getAccountDetail',
+        'getMaxId'
       ])
     },
 
@@ -177,12 +199,13 @@
     },
 
     created () {
-      this.tableName = this.tableModel.tableName
       this.newItemTitle = this.tableModel.newItemTitle
       this.editItemTitle = this.tableModel.editItemTitle
       this.path = this.tableModel.path
       this.editedItem = Object.assign({}, this.tableModel.model)
       this.defaultItem = Object.assign({}, this.tableModel.model)
+      this.tableName = this.tableModel.tableName ? this.tableModel.tableName : this.getAccountDetail(
+        {tableName: this.tableModel.parentTable, field: this.tableModel.parentIdField, value: this.$route.params.id})[this.tableModel.fieldToShow]
       for (let index in this.tableModel.headers) {
         this.tableHeaders.push(
             this.tableModel.headers[index]
@@ -198,7 +221,8 @@
     methods: {
       ...mapMutations([
         'setDetailsItem',
-        'addItem'
+        'addItem',
+        'addAccount'
       ]),
 
       editItem (item) {
@@ -212,7 +236,6 @@
       deleteItem (item) {
         const index = this.getTableItems({
           tableName: this.path}).indexOf(item)
-        console.log(index)
         confirm('Na pewno chcesz usunąć tę pozycje?') && this.getTableItems({
           tableName: this.path}).splice(index, 1)
       },
@@ -231,14 +254,24 @@
           Object.assign(this.getTableItems({
             tableName: this.path})[this.editedIndex], this.editedItem)
         } else {
+          let newId = this.getMaxId({tableName: this.tableModel.path, idField: this.tableModel.idField}) + 1
+          this.editedItem[this.tableModel.idField] = newId
+          // eslint-disable-next-line
+          if(this.path == 'clients'){
+            this.editedItem.name = this.editedItem.brideFirstName + ' i ' + this.editedItem.groomFirstName
+          }
           this.getTableItems({
             tableName: this.path}).push(this.editedItem)
+          // eslint-disable-next-line
+          if(this.path == 'clients'){
+            this.addAccount(newId)
+          }
         }
         this.close()
       },
 
       goToDetails (item) {
-        let tempId = Object.values(item)[0]
+        let tempId = item[this.tableModel.idField]
         this.$store.commit('setDetailsItem', { id: tempId, path: this.path, item: item })
         this.$router.push(this.path + '/' + tempId + '/details')
       }

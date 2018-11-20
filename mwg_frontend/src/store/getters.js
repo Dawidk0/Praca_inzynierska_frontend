@@ -16,13 +16,12 @@ export default {
   },
   getRelationName: (state) => ({tableName, propsToCompare, props, propsToShow}) => {
     let returnTable = state.tables[tableName].find(x => x[propsToCompare] === props)
-    if (typeof returnTable === 'undefined' ||
-      returnTable == null ||
-      returnTable.length < 0) {
-      return state.tables[tableName].find(x => x[propsToCompare] === 4)[propsToShow]
-    } else {
-      return returnTable[propsToShow]
-    }
+    // if (typeof returnTable === 'undefined' ||
+    //   returnTable == null ||
+    //   returnTable.length < 0) {
+    //   return state.tables[tableName].find(x => x[propsToCompare] === 4)[propsToShow]
+    // } else {
+    return returnTable[propsToShow]
   },
   authentication: (state) => ({login, password}) => {
     // eslint-disable-next-line
@@ -36,5 +35,16 @@ export default {
   },
   isAuthenticated: state => {
     return state.isAuthenticated
+  },
+  getMaxId: (state) => ({tableName, idField}) => {
+    let table = state.tables[tableName]
+    let value = Math.max(...table.map(o => o[idField]))
+    return value < 1 ? 1 : value
+  },
+  getRole: (state) => {
+    return state.role
+  },
+  getClientId: (state) => {
+    return state.clientId
   }
 }

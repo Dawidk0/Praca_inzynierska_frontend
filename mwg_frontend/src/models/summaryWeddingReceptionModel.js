@@ -1,10 +1,11 @@
 export default {
+  idField: 'weddingReceptionId',
   headers: {
     clientHeaders: [
-      {text: 'Imie Pani Młodej', value: 'brideFirstName'},
-      {text: 'Nazwisko Pani Młodej', value: 'brideLastName'},
-      {text: 'Imie Pana Młodego', value: 'groomFirstName'},
-      {text: 'Nazwisko Pana Młodego', value: 'groomLastName'},
+      {text: 'Imie Pani', value: 'brideFirstName'},
+      {text: 'Nazwisko Pani', value: 'brideLastName'},
+      {text: 'Imie Pana', value: 'groomFirstName'},
+      {text: 'Nazwisko Pana', value: 'groomLastName'},
       {text: 'Email', value: 'email'},
       {text: 'Telefon', value: 'phone'}
     ],

@@ -1,9 +1,11 @@
 export default{
   detailsButton: false,
+  idField: 'weddingReceptionMealId',
+  fieldToShow: 'weddingDate',
+  parentTable: 'weddingReceptions',
   parentIdField: 'weddingReceptionId',
   parentIdValue: -1,
   path: 'weddingReceptionMeals',
-  tableName: 'Dania na weselu',
   newItemTitle: 'Nowe danie na weselu',
   editItemTitle: 'Edytuj danie na weselu',
   headers: [

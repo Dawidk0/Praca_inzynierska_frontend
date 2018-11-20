@@ -2,10 +2,9 @@
   <v-container>
     <v-card>
       <v-card-title>
-        <span class="headline" > Przyjęcie weselne nr {{id}}</span>
+        <span class="headline" > Przyjęcie weselne: {{weddingReception.weddingReceptionId}} </span>
       </v-card-title>
       <v-card-text>
-
         <v-container
           v-for="(headers,key,index) in model.headers" :key="key">
           <v-card-title>
@@ -43,13 +42,15 @@
                   }}
                   </span>
                 <v-text-field
-                v-if="field.textField">
+                v-if="field.textField"
+                v-model="props.item[field.value]"
+                >
 
                 </v-text-field>
                 <v-menu
                   v-if="field.dateField"
                   :close-on-content-click="false"
-                  v-model="field.input"
+                  v-model="props.item[field.value]"
                   :nudge-right="40"
                   lazy
                   transition="scale-transition"
@@ -58,8 +59,9 @@
                   min-width="290px"
                 >
                   <v-text-field
+                    v-if="field.dateField"
                     slot="activator"
-                    v-model="ed[k]"
+                    v-model="props.item[field.value]"
                     :label="field.text"
                     prepend-icon="event"
                     readonly
@@ -89,11 +91,12 @@
     props: ['id'],
     data () {
       return {
+        weddingReception: -1,
         ed: {in: {}, out: {}},
-        selected: {},
+        selected: {mealsHeaders: [], additionsHeaders: [], bookingsHeaders: []},
         model,
         editedItem: {},
-        clientDetails: [{weddingDate: '12'}]
+        clientDetails: []
       }
     },
 
@@ -101,7 +104,9 @@
       ...mapGetters([
         'getDetailItem',
         'getTableItems',
-        'getRelationName'
+        'getRelationName',
+        'getClientId',
+        'getAccountDetail'
       ])
     },
 
@@ -122,6 +127,10 @@
       this.setDetailsComponentFlag()
       this.createPDF()
       this.clientDetails = this.getTableItems({tableName: 'clients', parentId: this.id, parentIdField: 'clientId'})
+      this.weddingReception = this.getAccountDetail({tableName: 'weddingReceptions', value: this.id, field: 'clientId'})
+      this.selected.mealsHeaders = this.getTableItems({tableName: 'weddingReceptionMeals', parentId: this.weddingReception.weddingReceptionId, parentIdField: 'weddingReceptionId'})
+      this.selected.additionsHeaders = this.getTableItems({tableName: 'weddingAdditions', parentId: this.weddingReception.weddingReceptionId, parentIdField: 'weddingReceptionId'})
+      this.selected.bookingsHeaders = this.getTableItems({tableName: 'bookings', parentId: this.weddingReception.weddingReceptionId, parentIdField: 'weddingReceptionId'})
     },
 
     beforeRouteLeave () {

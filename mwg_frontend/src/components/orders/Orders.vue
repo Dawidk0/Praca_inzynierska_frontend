@@ -2,7 +2,7 @@
   <v-container>
     <v-card>
       <v-card-title>
-        {{tableName}}
+        <h2>{{tableName}}</h2>
         <v-spacer></v-spacer>
         <v-text-field
           v-model="search"
@@ -47,27 +47,42 @@
           }}
         </td>
         <td class="justify-center layout px-0">
-          <v-icon
-            small
-            class="mr-2"
-            @click="editItem(props.item)"
-          >
-            edit
-          </v-icon>
-          <v-icon
-            small
-            @click="deleteItem(props.item)"
-          >
-            delete
-          </v-icon>
-          <v-btn
-            flat
-            small
-            @click="goToDetails(props.item)"
-            v-if="tableModel.detailsButton"
-          >
-            Zamówienie
-          </v-btn>
+          <div>
+            <v-btn
+              style="width:30px;height:30px;"
+              class="indigo lighten-1"
+              fab
+              dark
+              small
+              @click="editItem(props.item)"
+            ><v-icon>edit</v-icon>
+            </v-btn>
+            <v-btn
+              class="red darken-1"
+              fab
+              dark
+              small
+              style="width:30px;height:30px;"
+              @click="deleteItem(props.item)"
+            >
+              <v-icon
+                fab
+              >
+                delete
+              </v-icon>
+            </v-btn>
+            <v-btn
+              class="deep-orange darken-1"
+              small
+              round
+              dark
+              @click="goToDetails(props.item)"
+              style="height:30px;"
+              v-if="tableModel.detailsButton"
+            >
+              Zamówienie
+            </v-btn>
+          </div>
         </td>
       </template>
       <template slot="no-data">
@@ -156,7 +171,6 @@
       deleteItem (item) {
         const index = this.getTableItems({
           tableName: this.path}).indexOf(item)
-        console.log(index)
         confirm('Na pewno chcesz usunąć tę pozycje?') && this.getTableItems({
           tableName: this.path}).splice(index, 1)
       },
@@ -182,7 +196,7 @@
       },
 
       goToDetails (item) {
-        let tempId = Object.values(item)[0]
+        let tempId = item[this.tableModel.idField]
         this.$store.commit('setDetailsItem', { id: tempId, path: this.path, item: item })
         this.$router.push('orders/' + tempId)
       }

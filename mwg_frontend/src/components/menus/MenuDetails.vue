@@ -9,7 +9,6 @@
 <script>
   import { mapMutations } from 'vuex'
   import GenericTable from '../generic/GenericTable'
-  import GenericDetails from '../generic/GenericDetails'
   import tableModel from '../../models/mealInMenusTableModel'
 
   export default {
@@ -23,8 +22,7 @@
     },
 
     components: {
-      GenericTable,
-      GenericDetails
+      GenericTable
     },
 
     methods: {

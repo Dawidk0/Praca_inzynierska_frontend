@@ -1,5 +1,6 @@
 export default{
   detailsButton: false,
+  idField: 'supplierId',
   path: 'suppliers',
   tableName: 'Dostawcy',
   newItemTitle: 'Nowy dostawca',

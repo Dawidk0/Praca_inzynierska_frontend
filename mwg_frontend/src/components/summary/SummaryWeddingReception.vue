@@ -2,14 +2,16 @@
   <v-container>
     <v-card>
       <v-card-title>
-        <span class="headline" > Przyjęcie weselne nr {{id}}</span>
+        <span class="headline" ref="header"> Przyjęcie weselne nr {{id}} -
+        {{this.getAccountDetail(
+        {tableName: 'weddingReceptions', field: 'weddingReceptionId', value: this.$route.params.id})['weddingDate']}}</span>
       </v-card-title>
       <v-card-text>
 
         <v-container
           v-for="(headers,key,index) in model.headers" :key="key">
           <v-card-title>
-          {{model.tableLabels[index]}}
+         <h3> {{model.tableLabels[index]}}</h3>
           </v-card-title>
           <v-data-table
             :headers="headers"
@@ -20,17 +22,22 @@
             hide-actions
           >
             <template slot="items" slot-scope="props">
-              <td class="text-xs-right" v-for="(field, keyy, indexs) in headers">
-                 {{field.relation ?
-                getRelationName(
-                {tableName: field.fromTable,
-                propsToCompare: field.value,
-                props: Number(props.item[field.value]),
-                propsToShow: field.toShow
-                })
-                :props.item[field.value]
-                }}
-              </td>
+              <tr :ref="model.tableName[index]" >
+                <td class="text-xs-right" v-for="(field, innerIndex, k) in headers">
+                   {{field.relation ?
+                  getRelationName(
+                  {tableName: field.fromTable,
+                  propsToCompare: field.value,
+                  props: Number(props.item[field.value]),
+                  propsToShow: field.toShow
+                  })
+                  :props.item[field.value]
+                  }}
+                </td>
+              </tr>
+            </template>
+            <template slot="no-data">
+              <p class="justify-center layout px-0">Brak danych</p>
             </template>
           </v-data-table>
         </v-container>
@@ -46,6 +53,8 @@
 
 <script>
   import model from '../../models/summaryWeddingReceptionModel'
+  import pdfMake from 'pdfmake/build/pdfmake'
+  import pdfFonts from 'pdfmake/build/vfs_fonts'
   import { mapGetters, mapMutations } from 'vuex'
 
   export default {
@@ -55,7 +64,7 @@
       return {
         model,
         editedItem: {},
-        clientDetails: [{weddingDate: '12'}]
+        clientDetails: []
       }
     },
 
@@ -63,7 +72,8 @@
       ...mapGetters([
         'getDetailItem',
         'getTableItems',
-        'getRelationName'
+        'getRelationName',
+        'getAccountDetail'
       ])
     },
 
@@ -74,25 +84,47 @@
         'setDetailsComponentFlag',
         'disableDetailsComponentFlag'
       ]),
-      /* eslint-disable */
-      createPDF () {
-        var jsPDF = require('jspdf')
-        require('jspdf-autotable')
-        var vm = this
-        var columns = vm.model.tableLabels
-        var rows = [
-          [1, 'Shaw', 'Tanzania'],
-          [2, 'Nelson', 'Kazakhstan'],
-          [3, 'Garcia', 'Madagascar']
-        ]
-        var result = Object.keys(obj).map(function(key) {
-          return [Number(key), obj[key]];
-        });
 
-        console.log(result);
-        // var doc = new jsPDF('p', 'pt')
-        // doc.autoTable(vm.model.tableLabels, rows)
-        // doc.save('table.pdf')
+      createPDF: function () {
+        let date = this.getAccountDetail({tableName: 'weddingReceptions', field: 'weddingReceptionId', value: this.$route.params.id})['weddingDate']
+        var dd = { content: [] }
+        var header = 'Wesele nr: ' + this.id + ' - ' +
+          this.getAccountDetail(
+          {tableName: 'weddingReceptions', field: 'weddingReceptionId', value: this.$route.params.id})['weddingDate']
+        dd.content.push({text: header, fontSize: 14, bold: true, margin: [0, 20, 0, 8]})
+        var index = 0
+        for (var key in this.model.headers) {
+          dd.content.push({text: model.tableLabels[index], fontSize: 14, bold: true, margin: [0, 20, 0, 8]})
+          var parentHeader = this.model.headers[key]
+          var headers = []
+          for (var innerKey in parentHeader) {
+            headers.push({text: parentHeader[innerKey].text, style: 'tableHeader'})
+          }
+          var table = {
+            style: 'tableExample',
+            table: {
+              headerRows: 1,
+              body: [headers
+              ]
+            },
+            layout: 'headerLineOnly'
+          }
+          var section = this.model.tableName[index]
+          var context = []
+          for (var i in this.$refs[section]) {
+            for (var cell in this.$refs[section][i].cells) {
+              // eslint-disable-next-line
+              if (cell != 'item' && cell != 'namedItem' && cell != 'length') {
+                context.push(([this.$refs[section][i].cells[cell]][0].innerText))
+              }
+            }
+            table.table.body.push(context)
+            context = []
+          }
+          dd.content.push(table)
+          index++
+        }
+        pdfMake.createPdf(dd).download('podusumowanie' + date + '.pdf')
       }
 
     },
@@ -100,6 +132,7 @@
     created () {
       this.setDetailsComponentFlag()
       this.clientDetails = this.getTableItems({tableName: 'clients', parentId: this.id, parentIdField: 'clientId'})
+      pdfMake.vfs = pdfFonts.pdfMake.vfs
     },
 
     beforeRouteLeave () {

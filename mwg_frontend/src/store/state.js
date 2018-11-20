@@ -1,6 +1,8 @@
 export default{
+  clientId: 0,
   user: {},
-  isAuthenticated: true,
+  isAuthenticated: false,
+  role: 'client',
   detailsItemId: -1,
   detailsItemField: '',
   detailsItemCategory: '',

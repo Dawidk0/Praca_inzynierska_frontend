@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-layout>
+    <v-layout class="brown lighten-5">
     <v-navigation-drawer
       style="width: 250px"
       :clipped="$vuetify.breakpoint.mdAndUp"
@@ -14,7 +14,8 @@
           v-for="item in categories"
           :key="item.title"
           router
-          :to="item.to">
+          :to="item.to"
+          v-if="(item.client && getRole != 'admin' ) || (getRole == 'admin' && !item.client)">
           <v-list-tile-action>
             <v-icon>{{item.icon}}</v-icon>
           </v-list-tile-action>
@@ -26,7 +27,7 @@
     </v-navigation-drawer>
     <v-toolbar
       :clipped-left="$vuetify.breakpoint.lgAndUp"
-      color="blue darken-3"
+      class="red darken-3"
       dark
       app
       fixed
@@ -39,8 +40,12 @@
         <span class="hidden-sm-and-down">Weselichooo</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn flat v-if="isAuthenticated" @click="logoutMethod()">
-        <v-icon left >{{ logoutButton.icon }}</v-icon>
+      <v-btn flat
+             v-if="isAuthenticated"
+             @click="logoutMethod()">
+        <v-icon left >
+          {{ logoutButton.icon }}
+        </v-icon>
         {{logoutButton.title}}
       </v-btn>
     </v-toolbar>
@@ -83,7 +88,18 @@ Router.beforeEach(
       next()
     } else {
       // eslint-disable-next-line
-      if (store.state.isAuthenticated == true) { next() } else next({path: '/login'})
+      if (store.state.isAuthenticated == true) {
+        // eslint-disable-next-line
+        if(store.state.role == 'admin'){
+          next()
+        } else {
+          if (to.matched.some(record => record.meta.forClient)) {
+            next()
+          } else {
+            next({path: '/faq'})
+          }
+        }
+      } else next({path: '/login'})
     }
     next()
   }
@@ -106,14 +122,17 @@ Router.beforeEach(
           {icon: 'content_copy', title: 'Klienci', to: '/clients'},
           {icon: 'content_copy', title: 'Podsumowanie', to: '/summary'},
           {icon: 'content_copy', title: 'Zamówienia', to: '/orders'},
-          {icon: 'content_copy', title: 'Panel klienta', to: '/client-panel/1'}
+          {icon: 'content_copy', title: 'Panel klienta', to: '/client-panel', client: true},
+          {icon: 'content_copy', title: 'Pytania (FAQ)', to: '/faq', client: true}
         ],
         menus
       }
     },
     computed: {
       ...mapGetters([
-        'isAuthenticated'
+        'isAuthenticated',
+        'getRole',
+        'getClientId'
       ])
     },
 
