@@ -19,7 +19,7 @@ export default {
       {text: 'Opis', value: 'description'}
     ],
     bookingsHeaders: [
-      {text: 'Data przyjazdy', value: 'dateIn', dateField: true},
+      {text: 'Data przyjazdu', value: 'dateIn', dateField: true},
       {text: 'Data wyjazdu', value: 'dateOut', dateField: true},
       {text: 'Opis', value: 'description'},
       {text: 'Miejsce', value: 'bedId', relation: true, fromTable: 'beds', toShow: 'name', selectField: true}
