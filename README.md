@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # mwg
 
 > Inzynierka
@@ -19,3 +20,6 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+=======
+# Praca_inzynierska_frontend
+>>>>>>> cea20ae184d0925d631e678738724385bff90220
