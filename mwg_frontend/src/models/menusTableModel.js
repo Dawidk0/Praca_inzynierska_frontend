@@ -6,7 +6,7 @@ export default{
   newItemTitle: 'Nowe menu',
   editItemTitle: 'Edytuj menu',
   headers: [
-    {text: 'Nazwa', value: 'name', width: '2%'},
+    {text: 'Nazwa', value: 'name', width: '2%', required: true},
     {text: 'Opis', value: 'description', width: '2%'},
     {text: 'Akcje', value: 'actions', align: 'center', width: '2%'}
   ],
@@ -16,5 +16,6 @@ export default{
   model: {
     name: '',
     description: ''
-  }
+  },
+  uniqueField: 'name'
 }

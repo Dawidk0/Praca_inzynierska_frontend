@@ -30,7 +30,7 @@
               </v-layout>
               <v-layout>
                 <v-flex xs12>
-                  <v-btn @click="loginMethod">Login</v-btn>
+                  <v-btn @click="loginMethod">Zaloguj</v-btn>
                 </v-flex>
               </v-layout>
           </v-container>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+  import swal from 'sweetalert2'
   import { mapGetters, mapMutations } from 'vuex'
 
   export default {
@@ -80,7 +81,11 @@
           }
           this.$router.push({name: 'Main'})
         } else {
-          alert('Nie poprawny login/haslo')
+          swal({
+            title: 'Błąd!',
+            text: 'Niepoprawny login lub hasło',
+            type: 'error'
+          })
         }
       }
     }

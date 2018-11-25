@@ -6,7 +6,7 @@ export default{
   newItemTitle: 'Nowy dodatek',
   editItemTitle: 'Edytuj dodatek',
   headers: [
-    {text: 'Nazwa', value: 'name'},
+    {text: 'Nazwa', value: 'name', required: true},
     {text: 'Typ dodatku', value: 'additionTypeId', relation: true, fromTable: 'additionTypes', toShow: 'name', selectField: true},
     {text: 'Akcje', value: 'actions'}
   ],
@@ -16,5 +16,6 @@ export default{
   model: {
     name: '',
     additionTypeId: 0
-  }
+  },
+  uniqueField: 'name'
 }

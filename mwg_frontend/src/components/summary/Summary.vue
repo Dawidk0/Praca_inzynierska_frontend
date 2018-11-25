@@ -49,29 +49,6 @@
         <td class="justify-center layout px-0">
           <div>
             <v-btn
-              style="width:30px;height:30px;"
-              class="indigo lighten-1"
-              fab
-              dark
-              small
-              @click="editItem(props.item)"
-            ><v-icon>edit</v-icon>
-            </v-btn>
-            <v-btn
-              class="red darken-1"
-              fab
-              dark
-              small
-              style="width:30px;height:30px;"
-              @click="deleteItem(props.item)"
-            >
-              <v-icon
-                fab
-              >
-                delete
-              </v-icon>
-            </v-btn>
-            <v-btn
               class="deep-orange darken-1"
               small
               round

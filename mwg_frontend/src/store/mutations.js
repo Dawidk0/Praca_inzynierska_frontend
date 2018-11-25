@@ -40,6 +40,5 @@ export default{
     let account = state.tables['accounts'].filter(x => x['login'] == user.login)[0]
     state.role = account.role
     state.clientId = account.clientId
-    console.log(account.clientId)
   }
 }

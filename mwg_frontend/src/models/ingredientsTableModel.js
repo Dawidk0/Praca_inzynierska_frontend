@@ -6,7 +6,7 @@ export default{
   newItemTitle: 'Nowy składnik',
   editItemTitle: 'Edytuj składnik',
   headers: [
-    {text: 'Nazwa', value: 'name'},
+    {text: 'Nazwa', value: 'name', required: true},
     {text: 'Ilość', value: 'amount'},
     {text: 'Jednostka', value: 'shoppingUnit'},
     {text: 'Dostawca', value: 'supplierId', relation: true, fromTable: 'suppliers', toShow: 'name', selectField: true},
@@ -22,5 +22,6 @@ export default{
     shoppingUnit: '',
     supplierId: 0,
     ingredientTypeId: 0
-  }
+  },
+  uniqueField: 'name'
 }

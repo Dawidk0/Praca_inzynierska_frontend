@@ -6,7 +6,7 @@ export default{
   newItemTitle: 'Nowe danie',
   editItemTitle: 'Edytuj danie',
   headers: [
-    {text: 'Nazwa', value: 'name', width: '2%'},
+    {text: 'Nazwa', value: 'name', width: '2%', required: true},
     {text: 'Typ', value: 'mealTypeId', relation: true, fromTable: 'mealTypes', toShow: 'name', selectField: true, width: '2%'},
     {text: 'Akcje', value: 'actions', align: 'center', width: '2%'}
   ],
@@ -16,5 +16,6 @@ export default{
   model: {
     name: '',
     mealTypeId: 0
-  }
+  },
+  uniqueField: 'name'
 }

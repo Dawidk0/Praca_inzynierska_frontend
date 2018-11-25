@@ -6,11 +6,11 @@ export default{
   newItemTitle: 'Nowy nocleg',
   editItemTitle: 'Edytuj nocleg',
   headers: [
-    {text: 'Data przyjazdu', value: 'dateIn', dateField: true},
+    {text: 'Data przyjazdu', value: 'dateIn', dateField: true, required: true},
     {text: 'Data wyjazdu', value: 'dateOut', dateField: true},
     {text: 'Opis', value: 'description'},
-    {text: 'Wesele', value: 'weddingReceptionId', relation: true, fromTable: 'weddingReceptions', toShow: 'weddingDate', selectField: true},
-    {text: 'Miejsce', value: 'bedId', relation: true, fromTable: 'beds', toShow: 'name', selectField: true},
+    {text: 'Wesele', value: 'weddingReceptionId', relation: true, fromTable: 'weddingReceptions', toShow: 'weddingDate', selectField: true, required: true},
+    {text: 'Miejsce', value: 'bedId', relation: true, fromTable: 'beds', toShow: 'name', selectField: true, required: true},
     {text: 'Akcje', value: 'actions'}
   ],
   polishLabels: [

@@ -7,7 +7,7 @@ export default{
   editItemTitle: 'Edytuj przyjęcie weselne',
   headers: [
     {text: 'Data podpisania', value: 'signingDate', dateField: true, width: '1%'},
-    {text: 'Data wesela', value: 'weddingDate', dateField: true, width: '1%'},
+    {text: 'Data wesela', value: 'weddingDate', dateField: true, width: '1%', required: true},
     {text: 'Dorośli', value: 'numberOfAdults', width: '1%'},
     {text: 'Dzieci', value: 'numberOfChildren', width: '1%'},
     {text: 'Klient', value: 'clientId', relation: true, fromTable: 'clients', toShow: 'name', selectField: true, width: '5%'},
@@ -24,5 +24,6 @@ export default{
     numberOfChildren: '',
     clientId: 0,
     afterParty: 'tak'
-  }
+  },
+  uniqueField: 'weddingDate'
 }

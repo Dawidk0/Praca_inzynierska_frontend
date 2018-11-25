@@ -28,6 +28,8 @@
 
           <v-card-text>
             <v-container grid-list-md>
+              <v-form
+                v-model="valid">
               <v-layout wrap>
                 <v-flex  v-for="(value,key,index) in defaultItem" v-if="tableModel.parentId !== key" :key="key" >
                   <v-menu
@@ -42,6 +44,9 @@
                     min-width="290px"
                     >
                     <v-text-field
+                      :hint="tableHeaders[index].required ? 'Obowiązkowe' : ''"
+                      persistent-hint
+                      :rules="tableHeaders[index].required ? requireRules : []"
                       slot="activator"
                       v-model="editedItem[key]"
                       :label="polishLabels[index]"
@@ -51,6 +56,9 @@
                     <v-date-picker v-model="editedItem[key]" @input="tableHeaders[index].input = false"></v-date-picker>
                   </v-menu>
                   <v-select
+                    :hint="tableHeaders[index].required ? 'Obowiązkowe' : ''"
+                    persistent-hint
+                    :rules="tableHeaders[index].required ? requireRules : []"
                     v-if="tableHeaders[index].selectField"
                     :items="getTableItems({
                       tableName: tableHeaders[index].fromTable
@@ -61,20 +69,25 @@
                     v-model="editedItem[key]"
                   ></v-select>
                   <v-text-field
-                    required
+                    :hint="tableHeaders[index].required ? 'Obowiązkowe' : ''"
+                    persistent-hint
+                    :rules="tableHeaders[index].required ? requireRules : []"
                     v-if="!tableHeaders[index].selectField && !tableHeaders[index].dateField && key != tableModel.parentIdField"
                     v-model="editedItem[key]"
                     :label="polishLabels[index]"
                   ></v-text-field>
                 </v-flex>
+
               </v-layout>
+              </v-form>
+
             </v-container>
           </v-card-text>
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
-            <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
+            <v-btn color="blue darken-1" flat @click.native="close">Anuluj</v-btn>
+            <v-btn color="blue darken-1" flat @click.native="save">Zapisz</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -158,6 +171,7 @@
 </template>
 
 <script>
+  import swal from 'sweetalert2'
   import { mapGetters, mapMutations } from 'vuex'
 
   export default {
@@ -176,7 +190,11 @@
       editedIndex: -1,
       editedItem: {},
       search: '',
-      dialog: false
+      dialog: false,
+      valid: false,
+      requireRules: [
+        v => !!v || 'Obowiązkowe'
+      ]
     }),
 
     computed: {
@@ -249,25 +267,61 @@
       },
 
       save () {
-        if (this.tableModel.parentIdField) { this.editedItem[this.tableModel.parentIdField] = this.tableModel.parentIdValue }
-        if (this.editedIndex > -1) {
-          Object.assign(this.getTableItems({
-            tableName: this.path})[this.editedIndex], this.editedItem)
-        } else {
-          let newId = this.getMaxId({tableName: this.tableModel.path, idField: this.tableModel.idField}) + 1
-          this.editedItem[this.tableModel.idField] = newId
+        if (this.valid) {
+          if (this.tableModel.uniqueField &&
+            this.getTableItems(
+          {tableName: this.tableModel.path, parentId: this.editedItem[this.tableModel.uniqueField], parentIdField: this.tableModel.uniqueField}
+        ).length > 0) {
+            console.log(this.getTableItems({tableName: this.tableModel.path, parentId: this.editedItem[this.tableModel.uniqueField], parentIdField: this.tableModel.uniqueField})[0][this.tableModel.idField]
+              // eslint-disable-next-line
+            )
+            if (this.editedIndex > -1 &&
+              this.getTableItems(
+                {tableName: this.tableModel.path, parentId: this.editedItem[this.tableModel.uniqueField], parentIdField: this.tableModel.uniqueField}
+                // eslint-disable-next-line
+              ).length == 1 &&
+              this.getTableItems(
+                {tableName: this.tableModel.path, parentId: this.editedItem[this.tableModel.uniqueField], parentIdField: this.tableModel.uniqueField}
+                // eslint-disable-next-line
+                )[0][this.tableModel.idField] == this.editedItem[this.tableModel.idField]) {
+              Object.assign(this.getTableItems({
+                tableName: this.path})[this.editedIndex], this.editedItem)
+              this.close()
+            } else {
+              swal({
+                title: 'Błąd!',
+                text: 'Nowa pozycja nie jest unikalna',
+                type: 'error'
+              })
+            }
+          } else {
+            if (this.tableModel.parentIdField) { this.editedItem[this.tableModel.parentIdField] = this.tableModel.parentIdValue }
+            if (this.editedIndex > -1) {
+              Object.assign(this.getTableItems({
+                tableName: this.path})[this.editedIndex], this.editedItem)
+            } else {
+              let newId = this.getMaxId({tableName: this.tableModel.path, idField: this.tableModel.idField}) + 1
+              this.editedItem[this.tableModel.idField] = newId
           // eslint-disable-next-line
           if(this.path == 'clients'){
             this.editedItem.name = this.editedItem.brideFirstName + ' i ' + this.editedItem.groomFirstName
           }
-          this.getTableItems({
-            tableName: this.path}).push(this.editedItem)
+              this.getTableItems({
+                tableName: this.path}).push(this.editedItem)
           // eslint-disable-next-line
           if(this.path == 'clients'){
             this.addAccount(newId)
           }
+            }
+            this.close()
+          }
+        } else {
+          swal({
+            title: 'Błąd!',
+            text: 'Podaj wymagane pola',
+            type: 'error'
+          })
         }
-        this.close()
       },
 
       goToDetails (item) {

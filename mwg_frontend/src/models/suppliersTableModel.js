@@ -6,7 +6,7 @@ export default{
   newItemTitle: 'Nowy dostawca',
   editItemTitle: 'Edytuj dostawce',
   headers: [
-    {text: 'Nazwa', value: 'name'},
+    {text: 'Nazwa', value: 'name', required: true},
     {text: 'Telefon', value: 'phone'},
     {text: 'Email', value: 'email'},
     {text: 'Opis', value: 'description'},
@@ -20,5 +20,6 @@ export default{
     phone: '',
     email: '',
     description: ''
-  }
+  },
+  uniqueField: 'name'
 }

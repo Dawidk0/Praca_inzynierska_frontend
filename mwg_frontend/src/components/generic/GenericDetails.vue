@@ -1,5 +1,7 @@
 <template>
     <v-container>
+      <v-form v-model="valid">
+
       <v-card>
         <v-card-title >
           <span class="headline" > {{this.getAccountDetail(
@@ -12,6 +14,9 @@
                       v-for="textField in detailsModel.fields.textFields"
                       :key="textField.value">
                 <v-text-field
+                  hint="Obowiązkowe"
+                  persistent-hint
+                  :rules="requireRules"
                   :label="textField.text"
                   v-model="editedItem[textField.value]"
                 ></v-text-field>
@@ -65,12 +70,14 @@
           <v-btn color="blue darken-1" flat @click.native="setEditedItem">Restart</v-btn>
           <v-btn color="blue darken-1" flat @click.native="save">Zapisz</v-btn>
         </v-card-actions>
-      </v-card>
 
+      </v-card>
+      </v-form>
     </v-container>
 </template>
 
 <script>
+  import swal from 'sweetalert2'
   import { mapGetters, mapMutations } from 'vuex'
 
   export default {
@@ -81,7 +88,11 @@
       return {
         accountId: -1,
         editedItem: {},
-        input: {creationDate: '', expireDate: ''}
+        input: {creationDate: '', expireDate: ''},
+        valid: false,
+        requireRules: [
+          v => !!v || 'Obowiązkowe'
+        ]
       }
     },
 
@@ -101,12 +112,33 @@
         'disableDetailsComponentFlag'
       ]),
       setEditedItem () {
-        this.editedItem = Object.assign({}, this.getAccountDetail({tableName: 'accounts', field: 'accountId', value: this.accountId}))
+        this.editedItem = Object.assign({}, this.getAccountDetail({
+          tableName: 'accounts',
+          field: 'accountId',
+          value: this.accountId
+        }))
       },
       save () {
-        Object.assign(this.getTableItems({
-          tableName: 'accounts'})[this.editedItem.accountId], this.editedItem)
-        this.$router.push('/clients')
+        if (this.valid) {
+          if (this.detailsModel.uniqueField && this.getTableItems(
+            {
+              tableName: 'accounts',
+              parentId: this.editedItem[this.detailsModel.uniqueField],
+              parentIdField: this.detailsModel.uniqueField
+            }
+          ).length > 0) {
+            swal({
+              title: 'Błąd!',
+              text: 'Login nie jest unikalny',
+              type: 'error'
+            })
+          } else {
+            Object.assign(this.getTableItems({
+              tableName: 'accounts'
+            })[this.editedItem.accountId], this.editedItem)
+            this.$router.push('/clients')
+          }
+        }
       }
     },
 

@@ -3,7 +3,6 @@
     <v-card>
       <v-card-title>
         <span class="headline" > Przyjęcie weselne: {{weddingReception.weddingReceptionId}} </span>
-        {{selected}}
       </v-card-title>
       <v-card-text>
         <v-container>
@@ -134,7 +133,7 @@
                 <template v-else>
                   <v-menu
                     :close-on-content-click="false"
-                    v-model="props.item.output"
+                    v-model="props.item.input"
                     :nudge-right="40"
                     lazy
                     transition="scale-transition"
@@ -144,12 +143,12 @@
                   >
                     <v-text-field
                       slot="activator"
-                      v-model="props.item.dateOut"
+                      v-model="props.item.dateIn"
                       label="Data wyjazdu"
                       prepend-icon="event"
                       readonly
                     ></v-text-field>
-                    <v-date-picker v-model="props.item.dateOut" @input="props.item.output = false"></v-date-picker>
+                    <v-date-picker v-model="props.item.dateIn" @input="props.item.input = false"></v-date-picker>
                   </v-menu>
                 </template>
               </td>

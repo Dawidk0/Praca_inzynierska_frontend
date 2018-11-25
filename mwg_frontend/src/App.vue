@@ -37,7 +37,7 @@
           @click.stop="showDrawer = !showDrawer"
           v-if="isAuthenticated"
         ></v-toolbar-side-icon>
-        <span class="hidden-sm-and-down">Weselichooo</span>
+        <span>Weselichooo</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn flat
@@ -109,21 +109,21 @@ Router.beforeEach(
     data () {
       return {
         showDrawer: true,
-        logoutButton: {icon: 'insert_emoticon', title: 'Wyloguj'},
+        logoutButton: {icon: 'exit_to_app', title: 'Wyloguj'},
         categories: [
-          {icon: 'contacts', title: 'Menu', to: '/menus'},
-          {icon: 'history', title: 'Dania', to: '/meals'},
-          {icon: 'content_copy', title: 'Wesela', to: '/weddingReceptions'},
-          {icon: 'content_copy', title: 'Noclegi', to: '/bookings'},
-          {icon: 'content_copy', title: 'Składniki', to: '/ingredients'},
-          {icon: 'content_copy', title: 'Dodatki na weselu', to: '/weddingAdditions'},
-          {icon: 'content_copy', title: 'Dostawcy', to: '/suppliers'},
-          {icon: 'content_copy', title: 'Dodatki', to: '/additions'},
-          {icon: 'content_copy', title: 'Klienci', to: '/clients'},
-          {icon: 'content_copy', title: 'Podsumowanie', to: '/summary'},
-          {icon: 'content_copy', title: 'Zamówienia', to: '/orders'},
-          {icon: 'content_copy', title: 'Panel klienta', to: '/client-panel', client: true},
-          {icon: 'content_copy', title: 'Pytania (FAQ)', to: '/faq', client: true}
+          {icon: 'content_copy', title: 'Menu', to: '/menus'},
+          {icon: 'restaurant', title: 'Dania', to: '/meals'},
+          {icon: 'wc', title: 'Wesela', to: '/weddingReceptions'},
+          {icon: 'hotel', title: 'Noclegi', to: '/bookings'},
+          {icon: 'kitchen', title: 'Składniki', to: '/ingredients'},
+          {icon: 'local_dining', title: 'Dodatki na weselu', to: '/weddingAdditions'},
+          {icon: 'time_to_leave', title: 'Dostawcy', to: '/suppliers'},
+          {icon: 'add_circle_outline', title: 'Dodatki', to: '/additions'},
+          {icon: 'group', title: 'Klienci', to: '/clients'},
+          {icon: 'poll', title: 'Podsumowanie', to: '/summary'},
+          {icon: 'monetization_on', title: 'Zamówienia', to: '/orders'},
+          {icon: 'check_box', title: 'Panel klienta', to: '/client-panel', client: true},
+          {icon: 'priority_high', title: 'Pytania (FAQ)', to: '/faq', client: true}
         ],
         menus
       }

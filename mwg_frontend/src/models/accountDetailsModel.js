@@ -10,5 +10,6 @@ export default {
       {text: 'Data wygasnięcia', value: 'expireDate', dateField: true, input: ''}
     ],
     password: [{text: 'Hasło', value: 'password'}]
-  }
+  },
+  uniqueField: 'login'
 }
