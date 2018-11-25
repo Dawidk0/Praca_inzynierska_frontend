@@ -139,9 +139,7 @@
               style="width:30px;height:30px;"
               @click="deleteItem(props.item)"
             >
-          <v-icon
-            fab
-          >
+          <v-icon fab>
             delete
           </v-icon>
           </v-btn>
