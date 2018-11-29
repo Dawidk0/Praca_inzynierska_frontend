@@ -252,8 +252,36 @@
       deleteItem (item) {
         const index = this.getTableItems({
           tableName: this.path}).indexOf(item)
-        confirm('Na pewno chcesz usunąć tę pozycje?') && this.getTableItems({
-          tableName: this.path}).splice(index, 1)
+        swal({
+          title: 'Czy na pewno chcesz usunąć?',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Anuluj',
+          confirmButtonText: 'Usuń',
+          reverseButtons: true
+        }).then((result) => {
+          if (result.value) {
+            if (!this.tableModel.connectionTable || this.getTableItems(
+              {tableName: this.tableModel.connectionTable, parentId: item[this.tableModel.idField], parentIdField: this.tableModel.idField}
+            ).length < 1) {
+              swal(
+              'Usunieto!',
+              'Dane zostały usunięte',
+              'success'
+            )
+              this.getTableItems({
+                tableName: this.path}).splice(index, 1)
+            } else {
+              swal(
+                'Błąd!',
+                'Nie można usunąć, ponieważ do obiektu istnieją powiązania',
+                'error'
+              )
+            }
+          }
+        })
       },
 
       close () {
@@ -270,9 +298,7 @@
             this.getTableItems(
           {tableName: this.tableModel.path, parentId: this.editedItem[this.tableModel.uniqueField], parentIdField: this.tableModel.uniqueField}
         ).length > 0) {
-            console.log(this.getTableItems({tableName: this.tableModel.path, parentId: this.editedItem[this.tableModel.uniqueField], parentIdField: this.tableModel.uniqueField})[0][this.tableModel.idField]
               // eslint-disable-next-line
-            )
             if (this.editedIndex > -1 &&
               this.getTableItems(
                 {tableName: this.tableModel.path, parentId: this.editedItem[this.tableModel.uniqueField], parentIdField: this.tableModel.uniqueField}
