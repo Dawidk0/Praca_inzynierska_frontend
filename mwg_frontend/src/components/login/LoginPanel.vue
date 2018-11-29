@@ -1,10 +1,10 @@
 <template>
 <v-container>
-  <v-layout>
-    <v-flex xs 12 sm6 offset-sm3>
-      <v-card>
+  <v-layout  justify-center row fill-height >
+    <v-flex xs 12 sm6 >
+      <v-card  >
         <v-card-text>
-          <v-container>
+          <v-container  >
               <v-layout row>
                 <v-flex xs12>
                   <v-text-field
