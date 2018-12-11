@@ -9,7 +9,7 @@ export default{
   newItemTitle: 'Nowe danie w menu',
   editItemTitle: 'Edytuj danie w menu',
   headers: [
-    {text: 'Danie', value: 'mealId', relation: true, fromTable: 'meals', toShow: 'name', selectField: true},
+    {text: 'Danie', value: 'mealId', relation: true, fromTable: 'meals', toShow: 'name', selectField: true, required: true},
     {text: 'Ilość na osobę', value: 'amountPerPerson'},
     {text: 'Jednostka', value: 'unit'},
     {text: 'Akcje', value: 'actions'}

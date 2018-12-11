@@ -17,5 +17,6 @@ export default{
     name: '',
     description: ''
   },
-  uniqueField: 'name'
+  uniqueField: 'name',
+  connectionTable: 'mealInMenus'
 }

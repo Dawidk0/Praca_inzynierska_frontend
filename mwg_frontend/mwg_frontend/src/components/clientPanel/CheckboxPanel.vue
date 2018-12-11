@@ -144,7 +144,7 @@
                     <v-text-field
                       slot="activator"
                       v-model="props.item.dateIn"
-                      label="Data wyjazdu"
+                      label="Data przyjazdu"
                       prepend-icon="event"
                       readonly
                     ></v-text-field>

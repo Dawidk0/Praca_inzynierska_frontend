@@ -25,5 +25,6 @@ export default{
     clientId: 0,
     afterParty: 'tak'
   },
-  uniqueField: 'weddingDate'
+  uniqueField: 'weddingDate',
+  connectionTable: 'weddingReceptionMeals'
 }

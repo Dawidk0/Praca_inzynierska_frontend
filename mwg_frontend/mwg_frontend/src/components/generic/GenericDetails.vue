@@ -27,8 +27,10 @@
                 <v-text-field
                   :label="passwordField.text"
                   v-model="editedItem[passwordField.value]"
-                  type="password"
                   required
+                  :type="show ? 'text' : 'password'"
+                  :append-icon="show ? 'visibility_off' : 'visibility'"
+                  @click:append="show = !show"
                 ></v-text-field>
               </v-flex>
               <v-flex v-for="dateField in detailsModel.fields.dateFields" :key="dateField.text">
@@ -86,6 +88,7 @@
 
     data () {
       return {
+        show: false,
         accountId: -1,
         editedItem: {},
         input: {creationDate: '', expireDate: ''},

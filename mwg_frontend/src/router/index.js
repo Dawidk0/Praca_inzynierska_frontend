@@ -27,7 +27,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/menus',
       name: 'Main',
       component: Menus
     },

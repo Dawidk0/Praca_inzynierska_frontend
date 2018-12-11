@@ -6,8 +6,8 @@ export default{
   newItemTitle: 'Nowy dodatek na weselu',
   editItemTitle: 'Edytuj dodatek na weselu',
   headers: [
-    {text: 'Wesele', value: 'weddingReceptionId', relation: true, fromTable: 'weddingReceptions', toShow: 'weddingDate', selectField: true},
-    {text: 'Dodatek', value: 'additionId', relation: true, fromTable: 'additions', toShow: 'name', selectField: true},
+    {text: 'Wesele', value: 'weddingReceptionId', relation: true, fromTable: 'weddingReceptions', toShow: 'weddingDate', selectField: true, required: true},
+    {text: 'Dodatek', value: 'additionId', relation: true, fromTable: 'additions', toShow: 'name', selectField: true, required: true},
     {text: 'Opis', value: 'description'},
     {text: 'Akcje', value: 'actions'}
   ],
